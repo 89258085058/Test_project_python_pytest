@@ -18,6 +18,7 @@ class UntitledTestCase(unittest.TestCase):
         self.return_to_group_page(wd)
         self.logout(wd)
 
+
     def test_add_empty_group(self):
         wd = self.wd
         self.open_home_page(wd)
@@ -27,12 +28,15 @@ class UntitledTestCase(unittest.TestCase):
         self.return_to_group_page(wd)
         self.logout(wd)
 
+
     def logout(self, wd):
         # logout
         wd.find_element_by_link_text('Logout').click()
 
+
     def return_to_group_page(self, wd):
         wd.find_element_by_link_text("group page").click()
+
 
     def create_group(self, wd, group):
         # init group creation
@@ -51,8 +55,10 @@ class UntitledTestCase(unittest.TestCase):
         # submit group creation
         wd.find_element_by_name("submit").click()
 
+
     def open_groups_page(self, wd):
         wd.find_element_by_link_text("groups").click()
+
 
     def login(self, wd, username, password):
         wd.find_element_by_name("user").click()
@@ -64,9 +70,9 @@ class UntitledTestCase(unittest.TestCase):
         wd.find_element_by_name("pass").send_keys(password)
         wd.find_element_by_xpath("//input[@value='Login']").click()
 
+
     def open_home_page(self, wd):
         wd.get("http://localhost/addressbook/group.php?selected%5B%5D=1&delete=Delete+group%28s%29")
-
 
     
     def tearDown(self):
