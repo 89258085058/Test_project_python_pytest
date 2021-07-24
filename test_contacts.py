@@ -31,7 +31,7 @@ class UntitledTestCase(unittest.TestCase):
         self.add_personal_information(wd, Contact( firstname="", middlename="", lastname="", nickname="", title="", company="",
                                       address="", home="", mobile="", work="", fax="",
                                       email="", email2="", email3="", homepage="",
-                                      bday="-", bmonth="-", byear="-", aday="-", amonth="-", ayear="-", address2="", notes="",
+                                      bday="", bmonth="-", byear="", aday="", amonth="-", ayear="", address2="", notes="",
                                       phone2=""))
         self.check(wd)
 
