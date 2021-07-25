@@ -20,7 +20,7 @@ class UntitledTestCase(unittest.TestCase):
                                       email="asgorelov@mail.ru", email2="asgorelov@yandex.ru", email3="asgorelov@gmail.ru", homepage="www.134423.ru",
                                       bday="10", bmonth="May", byear="1991", aday="10", amonth="January", ayear="2013", address2="zelenograd", notes="privet info",
                                       phone2="12345"))
-        self.check(wd)
+        self.open_start_page(wd)
 
 
     def test_add_empty_contact(self):
@@ -33,10 +33,10 @@ class UntitledTestCase(unittest.TestCase):
                                       email="", email2="", email3="", homepage="",
                                       bday="", bmonth="-", byear="", aday="", amonth="-", ayear="", address2="", notes="",
                                       phone2=""))
-        self.check(wd)
+        self.open_start_page(wd)
 
 
-    def check(self, wd):
+    def open_start_page(self, wd):
         wd.find_element_by_link_text("home page").click()
 
     def add_personal_information(self, wd, contact):
