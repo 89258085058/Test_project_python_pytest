@@ -11,7 +11,7 @@ class UntitledTestCase(unittest.TestCase):
     
     def test_add_group(self):
         wd = self.wd
-        self.open_home_page(wd)
+        self.authorization_window_page(wd)
         self.login(wd, username="admin", password="secret")
         self.open_groups_page(wd)
         self.create_group(wd, Group(name="12345", header="12345", footer="12345"))
@@ -21,7 +21,7 @@ class UntitledTestCase(unittest.TestCase):
 
     def test_add_empty_group(self):
         wd = self.wd
-        self.open_home_page(wd)
+        self.authorization_window_page(wd)
         self.login(wd, username="admin", password="secret")
         self.open_groups_page(wd)
         self.create_group(wd, Group(name="", header="", footer=""))
@@ -71,7 +71,7 @@ class UntitledTestCase(unittest.TestCase):
         wd.find_element_by_xpath("//input[@value='Login']").click()
 
 
-    def open_home_page(self, wd):
+    def authorization_window_page(self, wd):
         wd.get("http://localhost/addressbook/group.php?selected%5B%5D=1&delete=Delete+group%28s%29")
 
     
