@@ -12,7 +12,7 @@ class UntitledTestCase(unittest.TestCase):
     
     def test_add_contact(self):
         wd = self.wd
-        self.open_home_page(wd)
+        self.open_main_page(wd)
         self.login(wd, username="admin", password="secret")
         self.add_new_contact(wd)
         self.add_personal_information(wd, Contact( firstname="alexandr", middlename="sergeevich", lastname="gorelov", nickname="asgorelov", title="12345", company="bolid",
@@ -25,7 +25,7 @@ class UntitledTestCase(unittest.TestCase):
 
     def test_add_empty_contact(self):
         wd = self.wd
-        self.open_home_page(wd)
+        self.open_main_page(wd)
         self.login(wd, username="admin", password="secret")
         self.add_new_contact(wd)
         self.add_personal_information(wd, Contact( firstname="", middlename="", lastname="", nickname="", title="", company="",
@@ -34,6 +34,7 @@ class UntitledTestCase(unittest.TestCase):
                                       bday="", bmonth="-", byear="", aday="", amonth="-", ayear="", address2="", notes="",
                                       phone2=""))
         self.open_start_page(wd)
+
 
 
     def open_start_page(self, wd):
@@ -124,7 +125,7 @@ class UntitledTestCase(unittest.TestCase):
         wd.find_element_by_name("pass").send_keys(password)
         wd.find_element_by_xpath("//input[@value='Login']").click()
 
-    def open_home_page(self, wd):
+    def open_main_page(self, wd):
         # открываем главную страницу
         wd.get("http://localhost/addressbook/")
 
