@@ -1,47 +1,14 @@
-# -*- coding: utf-8 -*-
-from selenium import webdriver
 from selenium.webdriver.support.ui import Select
-from contact import Contact
+
+class ManagerHelper:
+
+    def __init__(self, app):
+        self.app = app
 
 
-class UntitledTestCase(unittest.TestCase):
-
-    def setUp(self):
-        self.wd = webdriver.Firefox()
-        self.wd.implicitly_wait(30)
-    
-    def test_add_contact(self):
-        wd = self.wd
-        self.open_main_page(wd)
-        self.login(wd, username="admin", password="secret")
-        self.add_new_contact(wd)
-        self.add_personal_information(wd, Contact( firstname="alexandr", middlename="sergeevich", lastname="gorelov", nickname="asgorelov", title="12345", company="bolid",
-                                      address="zelenograd", home="89555555", mobile="89258085058", work="89000000000", fax="87000000000",
-                                      email="asgorelov@mail.ru", email2="asgorelov@yandex.ru", email3="asgorelov@gmail.ru", homepage="www.134423.ru",
-                                      bday="10", bmonth="May", byear="1991", aday="10", amonth="January", ayear="2013", address2="zelenograd", notes="privet info",
-                                      phone2="12345"))
-        self.open_start_page(wd)
-
-
-    def test_add_empty_contact(self):
-        wd = self.wd
-        self.open_main_page(wd)
-        self.login(wd, username="admin", password="secret")
-        self.add_new_contact(wd)
-        self.add_personal_information(wd, Contact( firstname="", middlename="", lastname="", nickname="", title="", company="",
-                                      address="", home="", mobile="", work="", fax="",
-                                      email="", email2="", email3="", homepage="",
-                                      bday="", bmonth="-", byear="", aday="", amonth="-", ayear="", address2="", notes="",
-                                      phone2=""))
-        self.open_start_page(wd)
-
-
-
-    def open_start_page(self, wd):
-        wd.find_element_by_link_text("home page").click()
-
-    def add_personal_information(self, wd, contact):
-        #fill contact form
+    def add_personal_information(self, contact):
+        wd = self.app.wd
+        self.add_new_contact()
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
         wd.find_element_by_name("firstname").send_keys(contact.firstname)
@@ -109,28 +76,12 @@ class UntitledTestCase(unittest.TestCase):
         wd.find_element_by_name("notes").clear()
         wd.find_element_by_name("notes").send_keys(contact.notes)
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
+        self.return_to_home_page()
 
-    def add_new_contact(self, wd):
-        # добовляем контакт
+    def add_new_contact(self):
+        wd = self.app.wd
         wd.find_element_by_link_text("add new").click()
 
-    def login(self, wd, username, password):
-        # вводим логин и пароль
-        wd.find_element_by_name("user").click()
-        wd.find_element_by_name("user").clear()
-        wd.find_element_by_name("user").send_keys(username)
-        wd.find_element_by_id("LoginForm").click()
-        wd.find_element_by_name("pass").click()
-        wd.find_element_by_name("pass").clear()
-        wd.find_element_by_name("pass").send_keys(password)
-        wd.find_element_by_xpath("//input[@value='Login']").click()
-
-    def open_main_page(self, wd):
-        # открываем главную страницу
-        wd.get("http://localhost/addressbook/")
-
-    def tearDown(self):
-        self.wd.quit()
-
-if __name__ == "__main__":
-    unittest.main()
+    def return_to_home_page(self):
+        wd = self.app.wd
+        wd.find_element_by_link_text("home page").click()

@@ -1,7 +1,8 @@
 from selenium import webdriver
 from fixture.session import SessionHelper
 from fixture.group import GroupHelper
-
+from fixture.manager import ManagerHelper
+from selenium.webdriver.support.ui import Select
 
 class Aplication:
 
@@ -10,10 +11,12 @@ class Aplication:
         self.wd.implicitly_wait(30)
         self.session = SessionHelper(self)
         self.group = GroupHelper(self)
+        self.manager = ManagerHelper(self)
+
 
     def open_home_page(self):
         wd = self.wd
-        wd.get("http://localhost/addressbook/group.php?selected%5B%5D=1&delete=Delete+group%28s%29")
+        wd.get("http://localhost/addressbook/birthdays.php")
 
     def destroy(self):
         self.wd.quit()
