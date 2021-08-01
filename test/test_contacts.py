@@ -1,5 +1,16 @@
 # -*- coding: utf-8 -*-
-from model.contact import Contact
+
+from contact import Contact
+from aplication import Aplication
+import pytest
+
+
+@pytest.fixture
+def app(request):
+    fixture = Aplication()
+    request.addfinalizer(fixture.destroy)
+    return fixture
+
 
 
 def test_add_contact(app):
@@ -11,7 +22,7 @@ def test_add_contact(app):
                                       phone2="12345"))
 
     app.session.logout()
-    app.session.logout()
+
 
 
 
@@ -23,3 +34,7 @@ def test_add_empty_contact(app):
                                       bday="", bmonth="-", byear="", aday="", amonth="-", ayear="", address2="", notes="",
                                       phone2=""))
     app.session.logout()
+
+
+
+
