@@ -4,7 +4,8 @@ from fixture.manager import ManagerHelper
 from selenium.webdriver.firefox.webdriver import WebDriver
 
 
-class Aplication:
+
+class Application:
 
     def __init__(self):
         self.wd = WebDriver()

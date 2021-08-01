@@ -85,3 +85,10 @@ class ManagerHelper:
     def return_to_home_page(self):
         wd = self.app.wd
         wd.find_element_by_link_text("home page").click()
+
+    def del_contact(self):
+        wd = self.app.wd
+        wd.find_element_by_name('selected[]').click()
+        wd.find_element_by_css_selector('[value="Delete"]').click()
+        wd.switch_to_alert().accept()
+
