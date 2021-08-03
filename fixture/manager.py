@@ -92,10 +92,8 @@ class ManagerHelper:
         wd.find_element_by_css_selector('[value="Delete"]').click()
         wd.switch_to_alert().accept()
 
-    def modification_personal_information(self, contact):
+    def modification_first_contact(self, contact):
         wd = self.app.wd
-        # выбираем контакт
-        wd.find_element_by_name('selected[]').click()
         # нажимаем кнопку изменить
         wd.find_element_by_css_selector('[title="Edit"]').click()
         # вносим изменения

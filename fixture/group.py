@@ -40,7 +40,7 @@ class GroupHelper:
         wd.find_element_by_name('delete').click()
         self.return_to_group_page()
 
-    def modification(self, group):
+    def modification_first_group(self, group):
         wd = self.app.wd
         self.open_groups_page()
         # выбираем группу
