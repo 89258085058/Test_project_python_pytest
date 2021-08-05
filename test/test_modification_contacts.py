@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from model.contact import Modification_contact
 
-
 def test_modification_first_contact(app):
     app.session.login(username="admin", password="secret")
     app.manager.modification_first_contact(Modification_contact(input_firstname="software", input_middlename="software", input_lastname="software", input_nickname="software", input_title="software", input_company="software",
