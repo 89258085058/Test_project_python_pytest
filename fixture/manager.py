@@ -65,7 +65,8 @@ class ManagerHelper:
         wd.switch_to_alert().accept()
 
     def open_home_page(self, wd):
-        wd.find_element_by_link_text("home").click()
+        if not (wd.current_url.endswith("/addressbook") and len(wd.find_element_by_name('searchstring')) > 0):
+            wd.find_element_by_link_text("home").click()
 
     def modification_first_contact(self, contact):
         wd = self.app.wd
