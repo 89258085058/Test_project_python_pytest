@@ -14,72 +14,39 @@ class ManagerHelper:
         self.return_to_home_page()
 
     def entering_personal_information(self, contact, wd):
-        wd.find_element_by_name("firstname").click()
-        wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys(contact.firstname)
-        wd.find_element_by_name("middlename").click()
-        wd.find_element_by_name("middlename").clear()
-        wd.find_element_by_name("middlename").send_keys(contact.middlename)
-        wd.find_element_by_name("lastname").click()
-        wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys(contact.lastname)
-        wd.find_element_by_name("nickname").click()
-        wd.find_element_by_name("nickname").clear()
-        wd.find_element_by_name("nickname").send_keys(contact.nickname)
-        wd.find_element_by_name("title").click()
-        wd.find_element_by_name("title").clear()
-        wd.find_element_by_name("title").send_keys(contact.title)
-        wd.find_element_by_name("company").click()
-        wd.find_element_by_name("company").clear()
-        wd.find_element_by_name("company").send_keys(contact.company)
-        wd.find_element_by_name("address").click()
-        wd.find_element_by_name("address").clear()
-        wd.find_element_by_name("address").send_keys(contact.address)
-        wd.find_element_by_name("home").click()
-        wd.find_element_by_name("home").clear()
-        wd.find_element_by_name("home").send_keys(contact.home)
-        wd.find_element_by_name("mobile").click()
-        wd.find_element_by_name("mobile").clear()
-        wd.find_element_by_name("mobile").send_keys(contact.mobile)
-        wd.find_element_by_name("work").click()
-        wd.find_element_by_name("work").clear()
-        wd.find_element_by_name("work").send_keys(contact.work)
-        wd.find_element_by_name("fax").click()
-        wd.find_element_by_name("fax").clear()
-        wd.find_element_by_name("fax").send_keys(contact.fax)
-        wd.find_element_by_name("email").click()
-        wd.find_element_by_name("email").clear()
-        wd.find_element_by_name("email").send_keys(contact.email)
-        wd.find_element_by_name("email2").click()
-        wd.find_element_by_name("email2").clear()
-        wd.find_element_by_name("email2").send_keys(contact.email2)
-        wd.find_element_by_name("email3").click()
-        wd.find_element_by_name("email3").clear()
-        wd.find_element_by_name("email3").send_keys(contact.email3)
-        wd.find_element_by_name("homepage").click()
-        wd.find_element_by_name("homepage").clear()
-        wd.find_element_by_name("homepage").send_keys(contact.homepage)
-        wd.find_element_by_name("bday").click()
-        Select(wd.find_element_by_name("bday")).select_by_visible_text(contact.bday)
-        wd.find_element_by_name("bmonth").click()
-        Select(wd.find_element_by_name("bmonth")).select_by_visible_text(contact.bmonth)
-        wd.find_element_by_name("byear").clear()
-        wd.find_element_by_name("byear").send_keys(contact.byear)
-        wd.find_element_by_name("aday").click()
-        Select(wd.find_element_by_name("aday")).select_by_visible_text(contact.aday)
-        wd.find_element_by_name("amonth").click()
-        Select(wd.find_element_by_name("amonth")).select_by_visible_text(contact.amonth)
-        wd.find_element_by_name("ayear").clear()
-        wd.find_element_by_name("ayear").send_keys(contact.ayear)
-        wd.find_element_by_name("address2").click()
-        wd.find_element_by_name("address2").clear()
-        wd.find_element_by_name("address2").send_keys(contact.address2)
-        wd.find_element_by_name("phone2").click()
-        wd.find_element_by_name("phone2").clear()
-        wd.find_element_by_name("phone2").send_keys(contact.phone2)
-        wd.find_element_by_name("notes").click()
-        wd.find_element_by_name("notes").clear()
-        wd.find_element_by_name("notes").send_keys(contact.notes)
+        self.change_value_contact("firstname", contact.firstname)
+        self.change_value_contact("middlename", contact.middlename)
+        self.change_value_contact("lastname", contact.lastname)
+        self.change_value_contact("nickname", contact.nickname)
+        self.change_value_contact("title", contact.title)
+        self.change_value_contact("company", contact.company)
+        self.change_value_contact("address", contact.address)
+        self.change_value_contact("home", contact.home)
+        self.change_value_contact("mobile", contact.mobile)
+        self.change_value_contact("work", contact.work)
+        self.change_value_contact("fax", contact.fax)
+        self.change_value_contact("email", contact.email)
+        self.change_value_contact("email2", contact.email2)
+        self.change_value_contact("email3", contact.email3)
+        self.change_value_contact("homepage", contact.homepage)
+        self.change_value_contact("bday", contact.bday)
+        self.change_value_contact("bmonth", contact.bmonth)
+        self.change_value_contact("byear", contact.byear)
+        self.change_value_contact("aday", contact.aday)
+        self.change_value_contact("amonth", contact.amonth)
+        self.change_value_contact("ayear", contact.ayear)
+        self.change_value_contact("address2", contact.address2)
+        self.change_value_contact("notes", contact.notes)
+        self.change_value_contact("phone2", contact.phone2)
+
+
+
+    def change_value_contact(self, field_name, text):
+        wd = self.app.wd
+        if text is not None:
+            wd.find_element_by_name(field_name).click()
+            wd.find_element_by_name(field_name).clear()
+            wd.find_element_by_name(field_name).send_keys(text)
 
     def add_new_contact(self):
         wd = self.app.wd
@@ -92,15 +59,18 @@ class ManagerHelper:
     def del_first_contact(self):
         wd = self.app.wd
         # переходим на домашнюю станицу
-        wd.find_element_by_link_text("home").click()
+        self.open_home_page(wd)
         wd.find_element_by_name('selected[]').click()
         wd.find_element_by_css_selector('[value="Delete"]').click()
         wd.switch_to_alert().accept()
 
+    def open_home_page(self, wd):
+        wd.find_element_by_link_text("home").click()
+
     def modification_first_contact(self, contact):
         wd = self.app.wd
         # переходим на домашнюю станицу
-        wd.find_element_by_link_text("home").click()
+        self.open_home_page(wd)
         # нажимаем кнопку изменить
         wd.find_element_by_css_selector('[title="Edit"]').click()
         # вносим изменения
@@ -109,3 +79,7 @@ class ManagerHelper:
         wd.find_element_by_name("update").click()
         self.return_to_home_page()
 
+    def count_contacts(self):
+        wd = self.app.wd
+        self.open_home_page(wd)
+        return len(wd.find_elements_by_name('selected[]'))
