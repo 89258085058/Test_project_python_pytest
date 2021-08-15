@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from model.contact import Contact
 
-
 def test_add_contact(app):
     old_cantacts = app.manager.get_contact_list()
     contact = Contact(firstname="alexandr", middlename="sergeevich", lastname="gorelov", nickname="", title="", company="",

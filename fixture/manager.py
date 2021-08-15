@@ -92,9 +92,11 @@ class ManagerHelper:
         self.open_home_page()
         contacts = []
         for element in wd.find_elements_by_name("entry"):
-            text = element.text
+            cells = element.find_elements_by_tag_name("td")
+            firstname = cells[2]
+            lastname = cells[1]
             id = element.find_element_by_name("selected[]").get_attribute("value")
-            contacts.append(Contact(firstname=text, id=id))
+            contacts.append(Contact(firstname=firstname.text, lastname=lastname.text, id=id))
         return contacts
 
 

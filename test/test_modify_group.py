@@ -1,6 +1,5 @@
 from model.group import Group
 
-
 def test_modify_group_name(app):
     old_groups = app.group.get_group_list()
     group = Group(name="New group")
