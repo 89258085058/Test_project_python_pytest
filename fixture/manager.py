@@ -12,6 +12,7 @@ class ManagerHelper:
         self.entering_personal_information(contact, wd)
         wd.find_element_by_name("submit").click()
         self.return_to_home_page()
+        self.contact_cache = None
 
     def entering_personal_information(self, contact, wd):
         self.change_value_contact("firstname", contact.firstname)
@@ -57,46 +58,71 @@ class ManagerHelper:
         wd.find_element_by_link_text("home page").click()
 
     def del_first_contact(self):
+        self.del_contact_by_index(0)
+
+    def select_first_contact(self):
+        wd = self.app.wd
+        wd.find_element_by_name('selected[]').click()
+
+    def select_contact_by_index(self, index):
+        wd = self.app.wd
+        wd.find_elements_by_name('selected[]')[index].click()
+
+    def del_contact_by_index(self, index):
         wd = self.app.wd
         # переходим на домашнюю станицу
         self.open_home_page()
-        wd.find_element_by_name('selected[]').click()
+        self.select_contact_by_index(index)
         wd.find_element_by_css_selector('[value="Delete"]').click()
         wd.switch_to_alert().accept()
+        self.contact_cache = None
 
     def open_home_page(self):
         wd = self.app.wd
         if not (wd.current_url.endswith("/addressbook") and len(wd.find_element_by_name('searchstring')) > 0):
             wd.find_element_by_link_text("home").click()
 
-    def modification_first_contact(self, contact):
+    def select_edit_contact_by_index(self, index):
+        wd = self.app.wd
+        wd.find_elements_by_css_selector('[title="Edit"]')[index].click()
+
+    def modification_first_contact(self):
+        wd = self.app.wd
+        self.modification_contact_by_index(0)
+
+
+    def modification_contact_by_index(self, index, contact):
         wd = self.app.wd
         # переходим на домашнюю станицу
         self.open_home_page()
         # нажимаем кнопку изменить
-        wd.find_element_by_css_selector('[title="Edit"]').click()
+        self.select_edit_contact_by_index(index)
         # вносим изменения
         self.entering_personal_information(contact, wd)
         # нажимаем обновить
         wd.find_element_by_name("update").click()
         self.return_to_home_page()
+        self.contact_cache = None
 
     def count_contacts(self):
         wd = self.app.wd
         self.open_home_page()
         return len(wd.find_elements_by_name('selected[]'))
 
+    contact_cache = None
+
 
     def get_contact_list(self):
-        wd = self.app.wd
-        self.open_home_page()
-        contacts = []
-        for element in wd.find_elements_by_name("entry"):
-            cells = element.find_elements_by_tag_name("td")
-            firstname = cells[2]
-            lastname = cells[1]
-            id = element.find_element_by_name("selected[]").get_attribute("value")
-            contacts.append(Contact(firstname=firstname.text, lastname=lastname.text, id=id))
-        return contacts
+        if self.contact_cache is None:
+            wd = self.app.wd
+            self.open_home_page()
+            self.contact_cache = []
+            for element in wd.find_elements_by_name("entry"):
+                cells = element.find_elements_by_tag_name("td")
+                firstname = cells[2]
+                lastname = cells[1]
+                id = element.find_element_by_name("selected[]").get_attribute("value")
+                self.contact_cache.append(Contact(firstname=firstname.text, lastname=lastname.text, id=id))
+        return list(self.contact_cache)
 
 
