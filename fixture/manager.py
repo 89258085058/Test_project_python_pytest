@@ -58,10 +58,21 @@ class ManagerHelper:
         wd.find_element_by_link_text("home page").click()
 
     def del_first_contact(self):
+        self.del_contact_by_index(0)
+
+    def select_first_contact(self):
+        wd = self.app.wd
+        wd.find_element_by_name('selected[]').click()
+
+    def select_contact_by_index(self, index):
+        wd = self.app.wd
+        wd.find_elements_by_name('selected[]')[index].click()
+
+    def del_contact_by_index(self, index):
         wd = self.app.wd
         # переходим на домашнюю станицу
         self.open_home_page()
-        wd.find_element_by_name('selected[]').click()
+        self.select_contact_by_index(index)
         wd.find_element_by_css_selector('[value="Delete"]').click()
         wd.switch_to_alert().accept()
         self.contact_cache = None
@@ -71,12 +82,21 @@ class ManagerHelper:
         if not (wd.current_url.endswith("/addressbook") and len(wd.find_element_by_name('searchstring')) > 0):
             wd.find_element_by_link_text("home").click()
 
-    def modification_first_contact(self, contact):
+    def select_edit_contact_by_index(self, index):
+        wd = self.app.wd
+        wd.find_elements_by_css_selector('[title="Edit"]')[index].click()
+
+    def modification_first_contact(self):
+        wd = self.app.wd
+        self.modification_contact_by_index(0)
+
+
+    def modification_contact_by_index(self, index, contact):
         wd = self.app.wd
         # переходим на домашнюю станицу
         self.open_home_page()
         # нажимаем кнопку изменить
-        wd.find_element_by_css_selector('[title="Edit"]').click()
+        self.select_edit_contact_by_index(index)
         # вносим изменения
         self.entering_personal_information(contact, wd)
         # нажимаем обновить
