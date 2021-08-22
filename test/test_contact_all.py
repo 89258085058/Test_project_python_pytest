@@ -10,6 +10,9 @@ def test_all_contct_on_home_page(app):
                        workphone="777", secondaryphone="666", Address="Moscow", email="123@mail.ru", email2="12345@mail.ru", email3="123456@mail.ru"))
     contact_from_home_page = app.contact.get_contact_list()[0]
     contact_from_edit_page = app.contact.get_contact_info_from_edit_page(0)
+    assert contact_from_home_page.firstname == contact_from_edit_page.firstname
+    assert contact_from_home_page.lastname == contact_from_edit_page.lastname
+    assert contact_from_home_page.Address == contact_from_edit_page.Address
     assert contact_from_home_page.all_phones_from_home_page == merge_phones_like_on_home_page(contact_from_edit_page)
     assert contact_from_home_page.all_email_from_home_page == merge_email_like_on_home_page(contact_from_edit_page)
 
