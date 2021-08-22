@@ -3,7 +3,7 @@ from random import randrange
 
 def test_delete_some_contact(app):
     if app.manager.count_contacts() == 0:
-        app.manager.add_personal_information(Contact(firstname="test_name", middlename="test_middlename"))
+        app.manager.add_personal_information(Contact(firstname="test_name", lastname="test_name"))
     old_cantacts = app.manager.get_contact_list()
     index = randrange(len(old_cantacts))
     app.manager.del_contact_by_index(index)
