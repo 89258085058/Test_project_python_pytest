@@ -7,7 +7,7 @@ def test_all_contct_on_home_page(app):
     if app.contact.count_contacts() == 0:
         app.contact.add_personal_information(Contact(firstname="Alexandr", lastname="Gorelov", id=id,
                        homephone="999", mobilephone="888",
-                       workphone="777", secondaryphone="666", Address="Moscow", email="123@mail.ru", email2="12345@mail.ru", email3="123456@mail.ru"))
+                       workphone="777", secondaryphone="666", Address="Moscow", email="1 23@mail.ru", email2="12345@mail.ru", email3="123456@mail.ru"))
     contact_from_home_page = app.contact.get_contact_list()[0]
     contact_from_edit_page = app.contact.get_contact_info_from_edit_page(0)
     assert contact_from_home_page.firstname == contact_from_edit_page.firstname
@@ -22,7 +22,7 @@ def test_all_contact_on_contact_view_page(app):
         app.contact.add_personal_information(Contact(firstname="Alexandr", lastname="Gorelov", id=id,
                                                      homephone="999", mobilephone="888",
                                                      workphone="777", secondaryphone="666", Address="Moscow",
-                                                     email="123@mail.ru", email2="12345@mail.ru",
+                                                     email="123   @mail.ru", email2="12345@mail.ru",
                                                      email3="123456@mail.ru"))
     old_cantacts = app.contact.get_contact_list()
     index = randrange(len(old_cantacts))
@@ -44,6 +44,7 @@ def test_all_contact_on_contact_view_page(app):
 def clear(s):
     return re.sub("[() -]","", s)
 
+
 def merge_phones_like_on_home_page(contact):
     return "\n".join(filter(lambda x: x != "",
                             map(lambda x: clear(x), filter(lambda x: x is not None,
@@ -51,5 +52,5 @@ def merge_phones_like_on_home_page(contact):
 
 def merge_email_like_on_home_page(contact):
     return "\n".join(filter(lambda x: x != "",
-                            map(lambda x: clear(x), filter(lambda x: x is not None,
-                                                           [contact.email, contact.email2, contact.email3]))))
+                            filter(lambda x: x is not None,
+                                    [contact.email, contact.email2, contact.email3])))
