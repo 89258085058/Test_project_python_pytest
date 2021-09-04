@@ -64,6 +64,20 @@ class ContactHelper:
         wd.switch_to_alert().accept()
         self.contact_cache = None
 
+    def del_contact_by_id(self, id):
+        wd = self.app.wd
+        # переходим на домашнюю станицу
+        self.open_home_page()
+        self.select_contact_by_id(id)
+        wd.find_element_by_css_selector('[value="Delete"]').click()
+        wd.switch_to_alert().accept()
+        self.contact_cache = None
+
+    def select_contact_by_id(self, id):
+        wd = self.app.wd
+        wd.find_element_by_css_selector("input[value='%s']" % id).click()
+
+
     def open_home_page(self):
         wd = self.app.wd
         if not (wd.current_url.endswith("/addressbook") and len(wd.find_element_by_name('searchstring')) > 0):
@@ -86,6 +100,24 @@ class ContactHelper:
         wd.find_element_by_name("update").click()
         self.return_to_home_page()
         self.contact_cache = None
+
+    def modification_contact_by_id(self, id, new_address_data):
+        wd = self.app.wd
+        self.open_home_page()
+        self.select_edit_contact_by_id(id)
+        self.entering_personal_information(new_address_data)
+        wd.find_element_by_name("update").click()
+        self.return_to_home_page()
+        self.contact_cache = None
+
+    def select_edit_contact_by_id(self, id):
+        wd = self.app.wd
+        element = wd.find_element_by_css_selector("input[id='%s']" % id)
+        row = element.find_element_by_xpath(".//ancestor::tr")
+        edit_cell = row.find_elements_by_tag_name("td")[7]
+        edit_cell.find_element_by_tag_name("a").click()
+
+
 
     def count_contacts(self):
         wd = self.app.wd

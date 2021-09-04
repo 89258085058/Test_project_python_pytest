@@ -24,7 +24,7 @@ for o, a in opt:
 
 
 def random_string(prefix, maxlen):
-    symbols = string.ascii_letters + string.digits + string.punctuation + " " * 10
+    symbols = string.ascii_letters * 10
     return prefix + "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
 
 testdata = [Contact(firstname="", lastname="", homephone="", mobilephone="",
