@@ -2,7 +2,6 @@
 from model.contact import Contact
 import random
 
-
 def test_modify_contact_firstname_and_lastname(app, db, check_ui):
     if len(db.get_contact_list()) == 0:
         app.contact.add_personal_information(Contact(firstname="1", lastname="1", homephone="1", mobilephone="1",
