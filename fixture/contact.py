@@ -1,3 +1,4 @@
+from selenium.webdriver.support.select import Select
 from model.contact import Contact
 import  re
 
@@ -200,3 +201,37 @@ class ContactHelper:
                        email=email, email2=email2, email3=email3)
 
 
+    def add_to_group_by_id(self, contact_id, group_name):
+        wd = self.app.wd
+        self.open_home_page()
+        wd.find_element_by_id(contact_id).click()
+        wd.find_element_by_name("to_group").click()
+        Select(wd.find_element_by_name("to_group")).select_by_visible_text(group_name)
+        wd.find_element_by_name("add").click()
+
+    def delete_from_group_by_id(self, contact_id, group_name):
+        wd = self.app.wd
+        self.open_home_page()
+        wd.find_element_by_name("group").click()
+        Select(wd.find_element_by_name("group")).select_by_visible_text(group_name)
+        wd.find_element_by_id(contact_id).click()
+        wd.find_element_by_name("remove").click()
+        wd.find_element_by_link_text('group page "%s"' % group_name).click()
+
+    def add_contact_to_group(self, contact, add_to_group):
+        wd = self.app.wd
+        self.open_home_page()
+        self.select_contact_by_id(contact.id)
+        wd.find_element_by_css_selector('select[name="to_group"]').click()
+        wd.find_element_by_css_selector('select[name="to_group"] option[value="%s"]' % add_to_group.id).click()
+        wd.find_element_by_css_selector('input[value="Add to"]').click()
+        self.open_home_page()
+
+    def del_contact_to_group(self, contact, add_to_group):
+        wd = self.app.wd
+        self.open_home_page()
+        wd.find_element_by_css_selector('select[name="group"]').click()
+        wd.find_element_by_css_selector('select[name="group"] option[value="%s"]' % add_to_group.id).click()
+        self.select_contact_by_id(contact.id)
+        wd.find_element_by_css_selector('input[name="remove"]').click()
+        self.open_home_page()
