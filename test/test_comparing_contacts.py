@@ -1,12 +1,12 @@
-from model.contact import Contact
+from fixture.db import *
 
 
-def test_check_all_contact(app, db):
-    # информация с главной страницы контактов
-    all_contact_main_page = app.contact.get_contact_list()
-    # информация из базы данных
-    all_contact_db = db.get_contact_list()
-    # Сравниваем список контактов
-    assert sorted(all_contact_main_page, key=Contact.id_or_max) == sorted(all_contact_db, key=Contact.id_or_max)
-    #print(all_contact_main_page)
-    #print(all_contact_db)
+def test_comparison_data_home_page_with_db(app, db):
+    if len(db.get_contact_list()) == 0:
+        app.contact.add_personal_information(Contact(firstname="Alexandr", lastname="Gorelov", id=id))
+    contact_from_home_page = app.contact.get_contact_list()
+    contact_from_db = db.get_contact_list()
+    assert sorted(contact_from_db, key=Contact.id_or_max) == sorted(contact_from_home_page, key=Contact.id_or_max)
+
+
+
