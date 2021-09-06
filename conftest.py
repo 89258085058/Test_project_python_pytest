@@ -83,8 +83,6 @@ def load_from_json(file):
         return jsonpickle.decode(f.read())
 
 
-
-
 @pytest.fixture(scope="session")
 def orm(request):
     db_config = load_config(request.config.getoption("--target"))["db"]
