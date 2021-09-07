@@ -2,7 +2,6 @@ from model.contact import Contact
 from model.group import Group
 import random
 
-
 def test_add_contact_to_group(app, orm, db):
     if len(db.get_group_list()) == 0:
         app.group.create(Group(name="test"))
