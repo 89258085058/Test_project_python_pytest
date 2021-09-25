@@ -16,6 +16,7 @@ class ContactHelper:
         self.return_to_home_page()
         self.contact_cache = None
 
+
     def entering_personal_information(self, contact):
         self.change_value_contact("firstname", contact.firstname)
         self.change_value_contact("lastname", contact.lastname)
