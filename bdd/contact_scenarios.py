@@ -6,12 +6,10 @@ from .contact_steps import *
 def test_add_new_contact():
     pass
 
+@scenario('contacts.feature', 'Modify contact')
+def test_mod_contact():
+    pass
 
 @scenario('contacts.feature', 'Delete a contact')
 def test_delete_contact():
-    pass
-
-
-@scenario('contacts.feature', 'Modify a contact')
-def test_modify_contact():
     pass

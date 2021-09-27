@@ -94,6 +94,7 @@ class ContactHelper:
         self.modification_contact_by_index(0)
 
 
+
     def modification_contact_by_index(self, index, contact):
         wd = self.app.wd
         self.open_home_page()
@@ -109,6 +110,13 @@ class ContactHelper:
         self.select_edit_contact_by_id(id)
         self.entering_personal_information(new_address_data)
         wd.find_element_by_name("update").click()
+        self.return_to_home_page()
+        self.contact_cache = None
+
+    def create_empty(self):
+        wd = self.app.wd
+        wd.find_element_by_link_text("add new").click()
+        wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
         self.return_to_home_page()
         self.contact_cache = None
 

@@ -2,36 +2,36 @@ from pytest_bdd import given, when, then
 from model.group import Group
 import random
 
-
-@given('a group list')
+@given('a group list', target_fixture="group_list")
 def group_list(db):
     return db.get_group_list()
 
-@given('a group with <name>, <header> and <footer>')
+
+@given('a group with <name>, <header> and <footer>', target_fixture="new_group")
 def new_group(name, header, footer):
     return Group(name=name, header=header, footer=footer)
 
 
-@when('I add the group to the list')
+@when('I add group to the list')
 def add_new_group(app, new_group):
     app.group.create(new_group)
 
 
 @then('the new group list is equal to the old list with the added group')
-def verify_group_added(db, group_list, new_group):
+def verify_group_edit(db, group_list, new_group):
     old_groups = group_list
     new_groups = db.get_group_list()
     old_groups.append(new_group)
     assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
 
 
-@given('a non-empty group list')
-def non_empty_group_list(app, db):
+@given('a non-empty group list', target_fixture="non_empty_group_list")
+def non_empty_group_list(db, app):
     if len(db.get_group_list()) == 0:
-        app.group.create(Group(name="test group"))
+        app.group.create(Group(name="name"))
     return db.get_group_list()
 
-@given('a random group from the list')
+@given('a random group from the list', target_fixture="random_group")
 def random_group(non_empty_group_list):
     return random.choice(non_empty_group_list)
 
@@ -39,7 +39,7 @@ def random_group(non_empty_group_list):
 def delete_group(app, random_group):
     app.group.delete_group_by_id(random_group.id)
 
-@then('the new group list is equal to the old group without deleted group')
+@then('the new group list is equal to the old list without the deleted group')
 def verify_group_deleted(db, non_empty_group_list, random_group, app, check_ui):
     old_groups = non_empty_group_list
     new_groups = db.get_group_list()
@@ -47,5 +47,4 @@ def verify_group_deleted(db, non_empty_group_list, random_group, app, check_ui):
     old_groups.remove(random_group)
     assert old_groups == new_groups
     if check_ui:
-        assert sorted(map(lambda x: Group(id=x.id, name=x.name.strip()), new_groups), key=Group.id_or_max) == \
-               sorted(app.group.get_group_list(), key=Group.id_or_max)
+        assert sorted(new_groups, key=Group.id_or_max) == sorted(app.group.get_group_list(), key=Group.id_or_max)
